@@ -6,7 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace AuthServerAPI.Contextes
 {
 
-    public class AuthServerDbContext(DbContextOptions<AuthServerDbContext> options) : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
+    public class AuthServerDbContext : IdentityDbContext
     {
+        public AuthServerDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

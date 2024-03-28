@@ -1,4 +1,6 @@
 using AuthServerAPI.Contextes;
+using AuthServerAPI.Models;
+using AuthServerAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +15,16 @@ builder.Services.AddDbContext<AuthServerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 5;
-}).AddEntityFrameworkStores<AuthServerDbContext>()
-    .AddDefaultTokenProviders();
+    options.Password.RequiredLength = 3;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireDigit = false;
+})
+.AddEntityFrameworkStores<AuthServerDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -27,21 +34,19 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
-        ValidateActor = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateActor = false,
+        ValidateIssuer = false,
+        ValidateAudience = false,
         RequireExpirationTime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
-        ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
 
     };
-}
-);
+});
 
 // Add services to the container.
-//builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
