@@ -1,4 +1,4 @@
-﻿namespace AuthServerAPI.Models
+﻿namespace TeamPickerAPI.Models
 {
     public class LoginUser
     {

@@ -1,6 +1,6 @@
-﻿using AuthServerAPI.Models;
+﻿using TeamPickerAPI.Models;
 
-namespace AuthServerAPI.Services
+namespace TeamPickerAPI.Services
 {
     public interface IAuthService
     {

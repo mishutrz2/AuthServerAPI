@@ -1,4 +1,4 @@
-﻿namespace AuthServerAPI.Enums
+﻿namespace TeamPickerAPI.Enums
 {
     public enum UserType
     {

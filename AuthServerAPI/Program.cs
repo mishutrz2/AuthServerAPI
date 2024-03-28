@@ -1,11 +1,11 @@
-using AuthServerAPI.Contextes;
-using AuthServerAPI.Models;
-using AuthServerAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TeamPickerAPI.Contextes;
+using TeamPickerAPI.Models;
+using TeamPickerAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +39,6 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false,
         RequireExpirationTime = true,
         ValidateIssuerSigningKey = true,
-        ClockSkew = TimeSpan.Zero,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
 
     };

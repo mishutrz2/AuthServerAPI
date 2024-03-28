@@ -1,9 +1,9 @@
-﻿using AuthServerAPI.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TeamPickerAPI.Models;
 
-namespace AuthServerAPI.Contextes
+namespace TeamPickerAPI.Contextes
 {
 
     public class AuthServerDbContext : IdentityDbContext

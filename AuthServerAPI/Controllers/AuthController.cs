@@ -1,8 +1,8 @@
-﻿using AuthServerAPI.Models;
-using AuthServerAPI.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TeamPickerAPI.Models;
+using TeamPickerAPI.Services;
 
-namespace AuthServerAPI.Controllers
+namespace TeamPickerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

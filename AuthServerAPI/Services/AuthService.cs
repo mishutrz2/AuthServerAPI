@@ -1,13 +1,13 @@
-﻿using AuthServerAPI.Enums;
-using AuthServerAPI.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using TeamPickerAPI.Enums;
+using TeamPickerAPI.Models;
 
-namespace AuthServerAPI.Services
+namespace TeamPickerAPI.Services
 {
     public class AuthService : IAuthService
     {
@@ -39,14 +39,14 @@ namespace AuthServerAPI.Services
             var response = new LoginResponse();
             var identityUser = await _userManager.FindByEmailAsync(user.UserName);
 
-            if (identityUser is null || (await _userManager.CheckPasswordAsync(identityUser, user.Password)) == false)
+            if (identityUser is null || await _userManager.CheckPasswordAsync(identityUser, user.Password) == false)
             {
                 return response;
             }
 
             response.IsLogedIn = true;
-            response.JwtToken = this.GenerateTokenString(identityUser.Email);
-            response.RefreshToken = this.GenerateRefreshTokenString();
+            response.JwtToken = GenerateTokenString(identityUser.Email);
+            response.RefreshToken = GenerateRefreshTokenString();
 
             identityUser.RefreshToken = response.RefreshToken;
             identityUser.RefreshTokenExpiry = DateTime.Now.AddHours(12);
@@ -69,8 +69,8 @@ namespace AuthServerAPI.Services
                 return response;
 
             response.IsLogedIn = true;
-            response.JwtToken = this.GenerateTokenString(identityUser.Email);
-            response.RefreshToken = this.GenerateRefreshTokenString();
+            response.JwtToken = GenerateTokenString(identityUser.Email);
+            response.RefreshToken = GenerateRefreshTokenString();
 
             identityUser.RefreshToken = response.RefreshToken;
             identityUser.RefreshTokenExpiry = DateTime.Now.AddHours(12);
